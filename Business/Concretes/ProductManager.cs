@@ -47,9 +47,33 @@ public class ProductManager : IProductService
         return createdProductResponse;
     }
 
-    public async Task<IPaginate<Product>> GetList()
+    public async Task<IPaginate<GetListProductResponse>> GetList()
     {
-     
-        return await _productDal.GetListAsync();
+
+        var productList = _productDal.GetList();
+
+        List<GetListProductResponse> listResponseItems = new List<GetListProductResponse>();
+
+        foreach (var product in productList.Items)
+        {
+            listResponseItems.Add(new GetListProductResponse
+            {
+                Id = product.Id,
+                ProductName = product.ProductName,
+                QuantityPerUnit = product.QuantityPerUnit,
+                UnitPrice = product.UnitPrice,
+                UnitsInStock = product.UnitsInStock
+            });
+        }
+
+        Paginate<GetListProductResponse> listResponse = new Paginate<GetListProductResponse>();
+        listResponse.Items = listResponseItems;
+        listResponse.Count = productList.Count;
+        listResponse.Index = productList.Index;
+        listResponse.Size = productList.Size;
+        listResponse.From = productList.From;
+        listResponse.Pages = productList.Pages;
+
+        return listResponse;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Business.Abstracts;
+﻿using AutoMapper;
+using Business.Abstracts;
 using Business.Dtos.Requests;
 using Business.Dtos.Responses;
 using Core.DataAccess.Paging;
@@ -19,10 +20,13 @@ namespace Business.Concretes;
 public class ProductManager : IProductService
 {
     IProductDal _productDal;
+    IMapper _mapper;
 
-    public ProductManager(IProductDal productDal)
+
+    public ProductManager(IProductDal productDal, IMapper mapper)
     {
         _productDal = productDal;
+        _mapper = mapper;
     }
 
     public async Task<CreatedProductResponse> Add(CreateProductRequest createProductRequest)
@@ -47,6 +51,10 @@ public class ProductManager : IProductService
         return createdProductResponse;
     }
 
+
+    //Poor Code
+
+    /*
     public async Task<IPaginate<GetListProductResponse>> GetListAsync()
     {
 
@@ -75,5 +83,13 @@ public class ProductManager : IProductService
         listResponse.Pages = productList.Pages;
 
         return listResponse;
+    }
+    */
+
+    public async Task<IPaginate<GetListProductResponse>> GetListAsync()
+    {
+        var productList = await _productDal.GetListAsync();
+        var mappedList = _mapper.Map<Paginate<GetListProductResponse>>(productList);
+        return mappedList;
     }
 }

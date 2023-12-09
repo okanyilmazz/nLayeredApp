@@ -47,10 +47,10 @@ public class ProductManager : IProductService
         return createdProductResponse;
     }
 
-    public async Task<IPaginate<GetListProductResponse>> GetList()
+    public async Task<IPaginate<GetListProductResponse>> GetListAsync()
     {
 
-        var productList = _productDal.GetList();
+        var productList = await _productDal.GetListAsync();
 
         List<GetListProductResponse> listResponseItems = new List<GetListProductResponse>();
 

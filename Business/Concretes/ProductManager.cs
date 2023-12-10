@@ -31,24 +31,40 @@ public class ProductManager : IProductService
 
     public async Task<CreatedProductResponse> Add(CreateProductRequest createProductRequest)
     {
-        Product product = new Product();
-        product.Id = Guid.NewGuid();
-        product.ProductName = createProductRequest.ProductName;
-        product.QuantityPerUnit = createProductRequest.QuantityPerUnit;
-        product.UnitsInStock = createProductRequest.UnitsInStock;
-        product.UnitPrice = createProductRequest.UnitPrice;
+        //Poor Code
 
-        Product createdProduct = await _productDal.AddAsync(product);
+        //Product product = new Product();
+        //product.Id = Guid.NewGuid();
+        //product.ProductName = createProductRequest.ProductName;
+        //product.QuantityPerUnit = createProductRequest.QuantityPerUnit;
+        //product.UnitsInStock = createProductRequest.UnitsInStock;
+        //product.UnitPrice = createProductRequest.UnitPrice;
 
-        CreatedProductResponse createdProductResponse = new CreatedProductResponse();
+        //Product createdProduct = await _productDal.AddAsync(product);
 
-        createdProductResponse.Id = createdProduct.Id;
-        createdProductResponse.ProductName = createdProduct.ProductName;
-        createdProductResponse.UnitPrice = createdProduct.UnitPrice;
-        createdProductResponse.QuantityPerUnit = createdProduct.QuantityPerUnit;
-        createdProductResponse.UnitsInStock = createdProduct.UnitsInStock;
+        //CreatedProductResponse createdProductResponse = new CreatedProductResponse();
 
-        return createdProductResponse;
+        //createdProductResponse.Id = createdProduct.Id;
+        //createdProductResponse.ProductName = createdProduct.ProductName;
+        //createdProductResponse.UnitPrice = createdProduct.UnitPrice;
+        //createdProductResponse.QuantityPerUnit = createdProduct.QuantityPerUnit;
+        //createdProductResponse.UnitsInStock = createdProduct.UnitsInStock;
+
+        //return createdProductResponse;
+
+
+        var product = _mapper.Map<Product>(createProductRequest);
+        var addedProduct = await _productDal.AddAsync(product);
+        var responseProduct = _mapper.Map<CreatedProductResponse>(product);
+        return responseProduct;
+
+    }
+
+    public async Task<CreatedProductResponse> Delete(Product product)
+    {
+        var deletedProduct = await _productDal.DeleteAsync(product, true);
+        var responseProduct = _mapper.Map<CreatedProductResponse>(deletedProduct);
+        return responseProduct;
     }
 
 
@@ -91,5 +107,25 @@ public class ProductManager : IProductService
         var productList = await _productDal.GetListAsync();
         var mappedList = _mapper.Map<Paginate<GetListProductResponse>>(productList);
         return mappedList;
+    }
+
+
+    // Example 1
+
+    //public async Task<CreatedProductResponse> Update(Product product)
+    //{
+    //    var updatedProduct = await _productDal.UpdateAsync(product);
+    //    var mappedProduct = _mapper.Map<CreatedProductResponse>(updatedProduct);
+    //    return mappedProduct;
+    //}
+
+    // Example 2
+
+    public async Task<UpdatedProductResponse> Update(UpdateProductRequest updateProductRequest)
+    {
+        var product = _mapper.Map<Product>(updateProductRequest);
+        var updatedProduct = await _productDal.UpdateAsync(product);
+        var mappedProduct = _mapper.Map<UpdatedProductResponse>(updatedProduct);
+        return mappedProduct;
     }
 }

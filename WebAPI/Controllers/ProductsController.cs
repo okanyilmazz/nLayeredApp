@@ -31,5 +31,17 @@ namespace WebAPI.Controllers
             var result = await _productService.GetListAsync();
             return Ok(result);
         }
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update([FromBody] UpdateProductRequest updateProductRequest)
+        {
+            var result = await _productService.Update(updateProductRequest);
+            return Ok(result);
+        }
+        [HttpPost("Delete")]
+        public async Task<IActionResult> Delete([FromBody] Product product)
+        {
+            await _productService.Delete(product);
+            return Ok();
+        }
     }
 }

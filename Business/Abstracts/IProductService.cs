@@ -14,6 +14,15 @@ public interface IProductService
 {
     Task<IPaginate<GetListProductResponse>> GetListAsync();
     Task<CreatedProductResponse> Add(CreateProductRequest createProductRequest);
+
+    // Example 1
+   // Task<CreatedProductResponse> Update(Product product);
+
+    // Example 2
+    Task<UpdatedProductResponse> Update(UpdateProductRequest updateProductRequest);
+
+    Task<CreatedProductResponse> Delete(Product product);
+
 }
 
 //response request pattern

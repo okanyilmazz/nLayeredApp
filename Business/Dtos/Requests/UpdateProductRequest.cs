@@ -13,6 +13,5 @@ namespace Business.Dtos.Requests
         public decimal UnitPrice { get; set; }
         public short UnitsInStock { get; set; }
         public string QuantityPerUnit { get; set; }
-        public DateTime UpdatedDate { get; set; }
     }
 }

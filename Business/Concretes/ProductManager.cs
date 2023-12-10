@@ -55,7 +55,7 @@ public class ProductManager : IProductService
 
         var product = _mapper.Map<Product>(createProductRequest);
         var addedProduct = await _productDal.AddAsync(product);
-        var responseProduct = _mapper.Map<CreatedProductResponse>(product);
+        var responseProduct = _mapper.Map<CreatedProductResponse>(addedProduct);
         return responseProduct;
 
     }
@@ -75,7 +75,7 @@ public class ProductManager : IProductService
     public async Task<DeletedProductResponse> Delete(DeleteProductRequest deleteProductRequest)
     {
         var product = _mapper.Map<Product>(deleteProductRequest);
-        var deletedProduct = await _productDal.DeleteAsync(product, true);
+        var deletedProduct = await _productDal.DeleteAsync(product, false); //DeletedDate'in değiştiğini kontrol etmek için false verdim
         var responseProduct = _mapper.Map<DeletedProductResponse>(deletedProduct);
         return responseProduct;
     }

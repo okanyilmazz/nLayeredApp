@@ -60,10 +60,23 @@ public class ProductManager : IProductService
 
     }
 
-    public async Task<CreatedProductResponse> Delete(Product product)
+
+    // Example 1
+
+    //public async Task<CreatedProductResponse> Delete(Product product)
+    //{
+    //    var deletedProduct = await _productDal.DeleteAsync(product, true);
+    //    var responseProduct = _mapper.Map<CreatedProductResponse>(deletedProduct);
+    //    return responseProduct;
+    //}
+
+    // Example 2
+
+    public async Task<DeletedProductResponse> Delete(DeleteProductRequest deleteProductRequest)
     {
+        var product = _mapper.Map<Product>(deleteProductRequest);
         var deletedProduct = await _productDal.DeleteAsync(product, true);
-        var responseProduct = _mapper.Map<CreatedProductResponse>(deletedProduct);
+        var responseProduct = _mapper.Map<DeletedProductResponse>(deletedProduct);
         return responseProduct;
     }
 

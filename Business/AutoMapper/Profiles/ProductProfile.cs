@@ -18,12 +18,15 @@ namespace Business.AutoMapper.Profiles
             CreateMap<Product, GetListProductResponse>().ReverseMap();
             CreateMap<Product, CreatedProductResponse>().ReverseMap();
             CreateMap<Product,UpdatedProductResponse>().ReverseMap();
+            CreateMap<Product, DeletedProductResponse>().ReverseMap();
 
             CreateMap<Paginate<Product>, Paginate<GetListProductResponse>>().ReverseMap();
 
 
             CreateMap<Product, CreateProductRequest>().ReverseMap();
             CreateMap<Product, UpdateProductRequest>().ReverseMap();
+            CreateMap<Product, DeleteProductRequest>().ReverseMap();
+
         }
     }
 }

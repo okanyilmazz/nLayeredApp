@@ -16,12 +16,16 @@ public interface IProductService
     Task<CreatedProductResponse> Add(CreateProductRequest createProductRequest);
 
     // Example 1
-   // Task<CreatedProductResponse> Update(Product product);
+    // Task<CreatedProductResponse> Update(Product product);
 
     // Example 2
     Task<UpdatedProductResponse> Update(UpdateProductRequest updateProductRequest);
 
-    Task<CreatedProductResponse> Delete(Product product);
+    //Example 1
+    //Task<CreatedProductResponse> Delete(Product product);
+
+    //Example 2
+    Task<DeletedProductResponse> Delete(DeleteProductRequest deleteProductRequest);
 
 }
 

@@ -9,15 +9,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Business.AutoMapper.Profiles
+namespace Business.Profiles
 {
     internal class ProductProfile : Profile
     {
         public ProductProfile()
         {
-            CreateMap<Product, GetListProductResponse>().ReverseMap();
+            CreateMap<Product, GetListProductResponse>().
+                ForMember(destinationMember: p => p.CategoryName,
+                memberOptions: opt => opt.MapFrom(p => p.Category.Name)).ReverseMap();
             CreateMap<Product, CreatedProductResponse>().ReverseMap();
-            CreateMap<Product,UpdatedProductResponse>().ReverseMap();
+            CreateMap<Product, UpdatedProductResponse>().ReverseMap();
             CreateMap<Product, DeletedProductResponse>().ReverseMap();
 
             CreateMap<Paginate<Product>, Paginate<GetListProductResponse>>().ReverseMap();

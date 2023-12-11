@@ -5,6 +5,7 @@ using Business.Dtos.Responses;
 using Core.DataAccess.Paging;
 using DataAccess.Abstracts;
 using Entities.Concretes;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
@@ -53,10 +54,15 @@ public class ProductManager : IProductService
         //return createdProductResponse;
 
 
-        var product = _mapper.Map<Product>(createProductRequest);
-        var addedProduct = await _productDal.AddAsync(product);
-        var responseProduct = _mapper.Map<CreatedProductResponse>(addedProduct);
-        return responseProduct;
+        //var product = _mapper.Map<Product>(createProductRequest);
+        //var addedProduct = await _productDal.AddAsync(product);
+        //var responseProduct = _mapper.Map<CreatedProductResponse>(addedProduct);
+        //return responseProduct;
+
+        Product product = _mapper.Map<Product>(createProductRequest);
+        Product createdProduct = await _productDal.AddAsync(product);
+        CreatedProductResponse createdProductResponse = _mapper.Map<CreatedProductResponse>(createdProduct);
+        return createdProductResponse;
 
     }
 
@@ -115,9 +121,17 @@ public class ProductManager : IProductService
     }
     */
 
-    public async Task<IPaginate<GetListProductResponse>> GetListAsync()
+    public async Task<IPaginate<GetListProductResponse>> GetListAsync(PageRequest pageRequest)
     {
+        /*
         var productList = await _productDal.GetListAsync();
+        var mappedList = _mapper.Map<Paginate<GetListProductResponse>>(productList);
+        return mappedList;*/
+
+        var productList = await _productDal.GetListAsync(
+            include: p => p.Include(p => p.Category),
+            index: pageRequest.PageIndex,
+            size: pageRequest.PageSize);
         var mappedList = _mapper.Map<Paginate<GetListProductResponse>>(productList);
         return mappedList;
     }

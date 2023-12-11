@@ -12,7 +12,7 @@ namespace Business.Abstracts;
 
 public interface IProductService
 {
-    Task<IPaginate<GetListProductResponse>> GetListAsync();
+    Task<IPaginate<GetListProductResponse>> GetListAsync(PageRequest pageRequest);
     Task<CreatedProductResponse> Add(CreateProductRequest createProductRequest);
 
     // Example 1

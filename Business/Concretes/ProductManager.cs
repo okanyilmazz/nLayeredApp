@@ -135,7 +135,7 @@ public class ProductManager : IProductService
         var mappedList = _mapper.Map<Paginate<GetListProductResponse>>(productList);
         return mappedList;
     }
-
+    //bir kategoride max 20 ürün olabilir
 
     // Example 1
 

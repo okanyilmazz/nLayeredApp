@@ -11,8 +11,7 @@ using System.Threading.Tasks;
 
 namespace Business.Profiles
 {
-    public
-        class CategoryProfile : Profile
+    public class CategoryProfile : Profile
     {
         public CategoryProfile()
         {

@@ -21,8 +21,12 @@ namespace Business
         {
             services.AddScoped<IProductService, ProductManager>();
             services.AddScoped<ICategoryService, CategoryManager>();
+            services.AddScoped<ICustomerService, CustomerManager>();
             services.AddScoped<CategoryBusinessRules>();
 
+            services.AddScoped<CategoryBusinessRules>();
+            services.AddScoped<ProductBusinessRules>();
+            services.AddScoped<CustomerBusinessRules>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
